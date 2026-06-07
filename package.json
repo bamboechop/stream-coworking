@@ -1,19 +1,19 @@
 {
   "author": "bamboechop <info@bamboechop.at>",
-  "name": "digital-doppler",
+  "name": "stream-coworking",
   "type": "module",
   "version": "1.0.0",
   "scripts": {
     "astro": "npx astro",
     "build": "npx rimraf dist && npx astro check && npx astro build",
+    "build:deploy": "npx rimraf dist && npm run db:migrate:deploy && npm run db:generate:types && npx astro build",
     "db:generate:types": "npx prisma generate",
     "db:migrate": "npx prisma migrate dev",
     "db:migrate:create": "npx prisma migrate dev --create-only --name rename_me",
     "db:migrate:deploy": "npx prisma migrate deploy",
     "db:pull": "npx prisma db pull",
+    "deploy": "git pull && npx rimraf node_modules && npm ci && npm run build:deploy && sudo systemctl restart stream-coworking",
     "dev": "npx astro dev",
-    "pm2": "git pull && npx rimraf node_modules && npm i && npm run pm2:build && (pm2 stop \"coworking (digital-doppler)\" || true)  && rm -rf ~/html/coworking.bamboechop.at/* && cp -r dist/client/* ~/html/coworking.bamboechop.at/ && pm2 start pm2.config.cjs",
-    "pm2:build": "npx rimraf dist && npm run db:migrate:deploy && npm run db:generate:types && npx astro build",
     "preview": "npx astro preview",
     "start": "npx astro dev"
   },
