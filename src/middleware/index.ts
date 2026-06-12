@@ -1,6 +1,10 @@
 import { defineMiddleware } from 'astro/middleware';
 
 export const onRequest = defineMiddleware(async (context, next)  => {
+  if(context.url.pathname === '/health') {
+    return next();
+  }
+
   const authenticatedRoutes = ['/dashboard', '/admin/dashboard'];
 
   const token = context.cookies.get('twitch-token');
